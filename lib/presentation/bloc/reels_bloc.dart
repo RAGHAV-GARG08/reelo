@@ -25,6 +25,7 @@ class ReelsBloc extends Bloc<ReelsEvent, ReelsState> {
   }) : super(const ReelsInitial()) {
     on<FetchVideos>(_onFetchVideos);
     on<OnVideoVisibleChanged>(_onVideoVisibleChanged);
+    on<ReelsTabVisibility>(_onTabVisibility);
   }
 
   // ---------------------------------------------------------------------------
@@ -165,6 +166,22 @@ class ReelsBloc extends Bloc<ReelsEvent, ReelsState> {
     //    network call. If a new scroll event fires before preloading finishes,
     //    step 2 above re-initializes the missing controller on demand.
     _preloadAheadBackground(currentState.videos, controllers, newIndex);
+  }
+
+  Future<void> _onTabVisibility(
+    ReelsTabVisibility event,
+    Emitter<ReelsState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! ReelsLoaded) return;
+    final controller = currentState.controllers[currentState.currentIndex];
+    if (controller == null || !controller.value.isInitialized) return;
+
+    if (event.isVisible) {
+      await controller.play();
+    } else {
+      await controller.pause();
+    }
   }
 
   // ---------------------------------------------------------------------------

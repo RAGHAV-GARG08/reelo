@@ -39,11 +39,12 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 1; // Start on Reels tab
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    ReelsScreen(),
-    DownloadsScreen(),
-  ];
+  // Screens are rebuilt on tab change so isActive reflects the current tab.
+  List<Widget> get _screens => [
+        const HomeScreen(),
+        ReelsScreen(isActive: _selectedIndex == 1),
+        const DownloadsScreen(),
+      ];
 
   @override
   Widget build(BuildContext context) {

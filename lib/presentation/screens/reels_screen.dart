@@ -7,19 +7,22 @@ import '../bloc/reels_state.dart';
 import '../widgets/video_player_item.dart';
 
 class ReelsScreen extends StatelessWidget {
-  const ReelsScreen({super.key});
+  final bool isActive;
+
+  const ReelsScreen({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ReelsBloc>(
       create: (_) => sl<ReelsBloc>()..add(const FetchVideos(isInitialFetch: true)),
-      child: const _ReelsView(),
+      child: _ReelsView(isActive: isActive),
     );
   }
 }
 
 class _ReelsView extends StatefulWidget {
-  const _ReelsView();
+  final bool isActive;
+  const _ReelsView({required this.isActive});
 
   @override
   State<_ReelsView> createState() => _ReelsViewState();
@@ -32,6 +35,17 @@ class _ReelsViewState extends State<_ReelsView> {
   void initState() {
     super.initState();
     _pageController = PageController();
+  }
+
+  @override
+  void didUpdateWidget(_ReelsView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Pause when the tab is hidden; resume when it becomes active again.
+    if (oldWidget.isActive != widget.isActive) {
+      context.read<ReelsBloc>().add(
+            ReelsTabVisibility(isVisible: widget.isActive),
+          );
+    }
   }
 
   @override

@@ -30,12 +30,21 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   bool _showControls = false;
 
   void _toggleControls() {
-    setState(() => _showControls = !_showControls);
-    if (_showControls) {
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) setState(() => _showControls = false);
-      });
+    final controller = widget.controller;
+    if (controller == null || !controller.value.isInitialized) return;
+
+    // Toggle playback.
+    if (controller.value.isPlaying) {
+      controller.pause();
+    } else {
+      controller.play();
     }
+
+    // Show the overlay briefly so the user sees the play/pause indicator.
+    setState(() => _showControls = true);
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) setState(() => _showControls = false);
+    });
   }
 
   @override

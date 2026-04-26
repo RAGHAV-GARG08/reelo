@@ -28,3 +28,14 @@ class OnVideoVisibleChanged extends ReelsEvent {
   @override
   List<Object?> get props => [visibleIndex];
 }
+
+/// Dispatched by the navigation shell when the Reels tab is shown or hidden.
+/// Pauses the current video when [isVisible] is false; resumes when true.
+class ReelsTabVisibility extends ReelsEvent {
+  final bool isVisible;
+
+  const ReelsTabVisibility({required this.isVisible});
+
+  @override
+  List<Object?> get props => [isVisible];
+}
