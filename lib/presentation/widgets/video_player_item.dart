@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import '../../domain/entities/video_entity.dart';
 import '../bloc/download_bloc.dart';
@@ -140,19 +141,12 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
             right: 12,
             child: Column(
               children: [
-                _ActionButton(
-                  icon: Icons.favorite_border,
-                  label: _formatLikes(widget.video.likes),
-                ),
-                const SizedBox(height: 20),
-                const _ActionButton(
-                  icon: Icons.comment_outlined,
-                  label: 'Comment',
-                ),
-                const SizedBox(height: 20),
-                const _ActionButton(
-                  icon: Icons.share_outlined,
-                  label: 'Share',
+                GestureDetector(
+                  onTap: () => Share.share(widget.video.url),
+                  child: const _ActionButton(
+                    icon: Icons.share_outlined,
+                    label: 'Share',
+                  ),
                 ),
                 const SizedBox(height: 20),
                 // Download button — reacts to DownloadBloc state
@@ -221,11 +215,6 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     );
   }
 
-  String _formatLikes(int likes) {
-    if (likes >= 1000000) return '${(likes / 1000000).toStringAsFixed(1)}M';
-    if (likes >= 1000) return '${(likes / 1000).toStringAsFixed(1)}K';
-    return likes.toString();
-  }
 }
 
 class _ActionButton extends StatelessWidget {

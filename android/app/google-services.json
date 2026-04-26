@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "861734633360",
+    "project_id": "reelo-dcb41",
+    "storage_bucket": "reelo-dcb41.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861734633360:android:bd7f3eebec5fa6008b3d15",
+        "android_client_info": {
+          "package_name": "com.example.reelo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqPM6_7LTqe9asy1Bcw5tCLmExUHt1aBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
